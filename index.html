@@ -5,19 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Para você — meu amor</title>
   <style>
-    body {
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins&display=swap');
+
+    html, body {
       margin: 0;
+      height: 100%;
       overflow: hidden;
-      height: 100vh;
-      background: radial-gradient(circle at center, #0b0b14 0%, #050509 100%);
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at bottom, #0b0b14, #020206 80%);
       color: white;
-      font-family: "Poppins", serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      position: relative;
     }
 
     canvas {
@@ -28,42 +29,46 @@
     }
 
     h1 {
+      font-family: 'Playfair Display', serif;
       font-size: 2em;
+      margin-bottom: 20px;
       z-index: 2;
     }
 
     p {
-      max-width: 600px;
-      line-height: 1.8;
       z-index: 2;
+      font-size: 1.1em;
+      line-height: 1.8em;
+      max-width: 650px;
+      margin: 10px;
     }
 
     .heart {
-      width: 80px;
-      height: 80px;
+      width: 90px;
+      height: 90px;
       background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center;
       background-size: contain;
-      animation: pulse 1.4s infinite;
+      animation: pulse 1.3s infinite;
       margin: 30px auto;
       cursor: pointer;
       z-index: 2;
+      filter: drop-shadow(0 0 8px #ff4d6d);
     }
 
     @keyframes pulse {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.15); }
+      50% { transform: scale(1.2); }
     }
 
     .credit {
       margin-top: 30px;
       font-size: 0.9em;
-      opacity: 0.7;
+      opacity: 0.8;
       z-index: 2;
     }
   </style>
 </head>
 <body>
-
   <canvas id="stars"></canvas>
 
   <h1>Para você, meu amor</h1>
@@ -72,14 +77,17 @@
     Amor, às vezes eu penso em como o tempo se curva diante de ti.  
     Há algo no teu silêncio que preenche — uma doçura escondida entre o mistério e o riso.  
     És feita de tudo o que é leve e, mesmo assim, carregas o peso do meu encanto.  
+    As estrelas pareceriam pálidas se pudessem te ver como eu te vejo — com o coração em febre e a mente entregue.  
     Feliz aniversário, minha vida. Que cada batida do meu coração ecoe o que não cabe nas palavras.
   </p>
 
   <div class="heart" id="heart"></div>
 
-  <p class="credit">— Com amor, Raphael</p>
+  <p class="credit">— Com amor, para sempre.</p>
 
-  <audio id="music" src="Cigarretes.mp3"></audio>
+  <audio id="music" preload="auto" loop>
+    <source src="Cigarretes.mp3" type="audio/mpeg">
+  </audio>
 
   <script>
     // Fundo animado de estrelas
@@ -87,40 +95,42 @@
     const ctx = canvas.getContext("2d");
     let stars = [];
 
-    function resize() {
+    function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      stars = Array.from({ length: 120 }).map(() => ({
+      stars = Array.from({ length: 150 }).map(() => ({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        size: Math.random() * 1.2,
-        speed: Math.random() * 0.4 + 0.2
+        size: Math.random() * 1.3,
+        speed: Math.random() * 0.3 + 0.1,
+        opacity: Math.random() * 0.8 + 0.2
       }));
     }
 
-    function animate() {
+    function animateStars() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "white";
       stars.forEach(star => {
         ctx.beginPath();
+        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
         ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
         ctx.fill();
         star.y += star.speed;
         if (star.y > canvas.height) star.y = 0;
       });
-      requestAnimationFrame(animate);
+      requestAnimationFrame(animateStars);
     }
 
-    window.addEventListener("resize", resize);
-    resize();
-    animate();
-    
-    const music = document.getElementById("music");
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+    animateStars();
+
+    // Controle da música
     const heart = document.getElementById("heart");
+    const music = document.getElementById("music");
 
     heart.addEventListener("click", () => {
       if (music.paused) {
-        music.play();
+        music.play().catch(e => console.log("Autoplay bloqueado:", e));
       } else {
         music.pause();
       }
