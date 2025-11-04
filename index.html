@@ -5,133 +5,126 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Para você — meu amor</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Quicksand:wght@300;400&display=swap');
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      height: 100vh;
-      background: radial-gradient(ellipse at bottom, #0b132b 0%, #000000 100%);
+      margin: 0;
       overflow: hidden;
-      color: #fff;
-      font-family: 'Playfair Display', serif;
+      height: 100vh;
+      background: radial-gradient(circle at center, #0b0b14 0%, #050509 100%);
+      color: white;
+      font-family: "Poppins", serif;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
       text-align: center;
       position: relative;
     }
 
-    /* Fundo de estrelas animadas com CSS */
-    .stars, .stars::before, .stars::after {
-      content: '';
-      position: absolute;
+    canvas {
+      position: fixed;
       top: 0;
       left: 0;
-      width: 200%;
-      height: 200%;
-      background: transparent url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="2" height="2"><circle cx="1" cy="1" r="1" fill="white" /></svg>') repeat;
-      background-size: 3px 3px;
-      opacity: 0.2;
-      animation: moveStars 60s linear infinite;
-    }
-    .stars::before {
-      animation-duration: 90s;
-      opacity: 0.15;
-    }
-    .stars::after {
-      animation-duration: 120s;
-      opacity: 0.1;
-    }
-
-    @keyframes moveStars {
-      from { transform: translate3d(0, 0, 0); }
-      to { transform: translate3d(-100px, -100px, 0); }
-    }
-
-    .container {
-      z-index: 1;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 50px 60px;
-      border-radius: 20px;
-      box-shadow: 0 0 35px rgba(255, 255, 255, 0.1);
-      max-width: 800px;
-      animation: fadeIn 2s ease-in-out;
+      z-index: 0;
     }
 
     h1 {
       font-size: 2em;
-      margin-bottom: 30px;
-      text-shadow: 0 0 15px rgba(255,255,255,0.3);
-      animation: pulse 5s infinite ease-in-out;
+      z-index: 2;
     }
 
     p {
-      font-family: 'Quicksand', sans-serif;
-      font-size: 1.15em;
-      line-height: 1.9em;
-      margin: 12px 0;
-      opacity: 0;
-      animation: fadeInUp 1.2s forwards;
+      max-width: 600px;
+      line-height: 1.8;
+      z-index: 2;
     }
 
-    p:nth-child(2) { animation-delay: 0.6s; }
-    p:nth-child(3) { animation-delay: 1.2s; }
-    p:nth-child(4) { animation-delay: 1.8s; }
-    p:nth-child(5) { animation-delay: 2.4s; }
-    p:nth-child(6) { animation-delay: 3s; }
-    p:nth-child(7) { animation-delay: 3.6s; }
-    p:nth-child(8) { animation-delay: 4.2s; }
-
-    footer {
-      margin-top: 40px;
-      font-size: 0.95em;
-      color: #ccc;
-      opacity: 0.8;
+    .heart {
+      width: 80px;
+      height: 80px;
+      background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center;
+      background-size: contain;
+      animation: pulse 1.4s infinite;
+      margin: 30px auto;
+      cursor: pointer;
+      z-index: 2;
     }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(25px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
     @keyframes pulse {
-      0%, 100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
-      50% { text-shadow: 0 0 25px rgba(255, 255, 255, 0.6); }
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
     }
 
-    .container p:hover {
-      text-shadow: 0 0 10px rgba(255,255,255,0.6);
-      transition: all 0.3s ease-in-out;
+    .credit {
+      margin-top: 30px;
+      font-size: 0.9em;
+      opacity: 0.7;
+      z-index: 2;
     }
   </style>
 </head>
 <body>
-  <div class="stars"></div>
 
-  <div class="container">
-    <h1>Para você, meu amor</h1>
+  <canvas id="stars"></canvas>
 
-    <p>Amor, às vezes eu penso em como o tempo se curva diante de ti.</p>
-    <p>Há algo no teu silêncio que preenche — uma doçura escondida entre o mistério e o riso.</p>
-    <p>És feita de tudo o que é leve e, mesmo assim, carregas o peso do meu encanto.</p>
-    <p>As estrelas pareceriam pálidas se pudessem te ver como eu te vejo — com o coração em febre e a mente entregue.</p>
-    <p>Não há canto do mundo onde teu rastro não se espalhe em mim.</p>
-    <p>Teu toque mora nas minhas horas, tua ausência no meu fôlego.</p>
-    <p>Tu és a calma e o caos, a pausa e o suspiro, o verso que não ouso terminar.</p>
-    <p>Feliz aniversário, minha vida. Que cada batida do meu coração ecoe o que não cabe nas palavras.</p>
+  <h1>Para você, meu amor</h1>
 
-    <footer>— Com amor, para sempre.</footer>
-  </div>
+  <p>
+    Amor, às vezes eu penso em como o tempo se curva diante de ti.  
+    Há algo no teu silêncio que preenche — uma doçura escondida entre o mistério e o riso.  
+    És feita de tudo o que é leve e, mesmo assim, carregas o peso do meu encanto.  
+    Feliz aniversário, minha vida. Que cada batida do meu coração ecoe o que não cabe nas palavras.
+  </p>
 
-  <audio id="player" preload="auto" autoplay loop>
-    <source src="Cigarettes.mp3" type="audio/mpeg">
-  </audio>
+  <div class="heart" id="heart"></div>
+
+  <p class="credit">— Com amor, Raphael</p>
+
+  <audio id="music" src="Cigarretes.mp3"></audio>
+
+  <script>
+    // Fundo animado de estrelas
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      stars = Array.from({ length: 120 }).map(() => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 1.2,
+        speed: Math.random() * 0.4 + 0.2
+      }));
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      stars.forEach(star => {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.fill();
+        star.y += star.speed;
+        if (star.y > canvas.height) star.y = 0;
+      });
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+    
+    const music = document.getElementById("music");
+    const heart = document.getElementById("heart");
+
+    heart.addEventListener("click", () => {
+      if (music.paused) {
+        music.play();
+      } else {
+        music.pause();
+      }
+    });
+  </script>
 </body>
 </html>
