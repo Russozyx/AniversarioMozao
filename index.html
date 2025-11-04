@@ -1,140 +1,285 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Para você — meu amor</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins&display=swap');
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Feliz Aniversário — Meu Amor</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: "Georgia", "Poppins", serif;
+  background: radial-gradient(ellipse at top left, rgba(12,6,20,1) 0%, rgba(6,3,12,1) 60%, rgba(4,2,8,1) 100%);
+  color: #f6eef8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  overflow: hidden;
+}
 
-    html, body {
-      margin: 0;
-      height: 100%;
-      overflow: hidden;
-      font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at bottom, #0b0b14, #020206 80%);
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
+/* Cartão principal */
+.card {
+  width: 100%;
+  max-width: 920px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: 18px;
+  padding: 28px 36px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.03);
+  z-index: 2;
+}
 
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 0;
-    }
+.header {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 12px;
+}
 
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2em;
-      margin-bottom: 20px;
-      z-index: 2;
-    }
+.title {
+  font-size: 26px;
+  letter-spacing: 0.6px;
+  font-weight: 700;
+  color: #ffe6f2;
+}
 
-    p {
-      z-index: 2;
-      font-size: 1.1em;
-      line-height: 1.8em;
-      max-width: 650px;
-      margin: 10px;
-    }
+.subtitle {
+  font-size: 13px;
+  color: rgba(255,230,240,0.75);
+}
 
-    .heart {
-      width: 90px;
-      height: 90px;
-      background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center;
-      background-size: contain;
-      animation: pulse 1.3s infinite;
-      margin: 30px auto;
-      cursor: pointer;
-      z-index: 2;
-      filter: drop-shadow(0 0 8px #ff4d6d);
-    }
+.poema {
+  margin-top: 14px;
+  font-size: 18px;
+  line-height: 1.9;
+  max-height: 420px;
+  overflow: auto;
+  padding-right: 12px;
+  text-align: justify;
+  white-space: pre-wrap;
+}
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-    }
+/* Barra de rolagem personalizada */
+.poema::-webkit-scrollbar {
+  width: 8px;
+}
+.poema::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.03);
+  border-radius: 4px;
+}
+.poema::-webkit-scrollbar-thumb {
+  background: rgba(255,200,220,0.3);
+  border-radius: 4px;
+}
+.poema::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,150,200,0.5);
+}
 
-    .credit {
-      margin-top: 30px;
-      font-size: 0.9em;
-      opacity: 0.8;
-      z-index: 2;
-    }
-  </style>
+.controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: #ffdff0;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all .18s ease;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+}
+
+footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+  color: rgba(255,230,240,0.6);
+  font-size: 12px;
+}
+
+/* Coração */
+.heart-ui {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.heart-btn {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 30% 30%, rgba(255,182,193,0.12), rgba(255,105,180,0.06));
+  backdrop-filter: blur(2px);
+  border: 1px solid rgba(255,255,255,0.04);
+  cursor: pointer;
+  pointer-events: auto;
+}
+.heart-icon {
+  font-size: 48px;
+  color: #ffb6c1;
+  transform-origin: center center;
+  display: inline-block;
+  animation: beat-slow 1s infinite ease-in-out;
+}
+.heart-playing .heart-icon {
+  animation: beat-fast 0.6s infinite ease-in-out;
+}
+@keyframes beat-slow {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.07); }
+  60% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+@keyframes beat-fast {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.12); }
+  60% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+.prompt {
+  margin-top: 12px;
+  text-align: center;
+  color: rgba(255,230,240,0.7);
+  font-size: 14px;
+}
+
+/* Fundo estrelado */
+.stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  opacity: 0;
+}
+</style>
 </head>
 <body>
-  <canvas id="stars"></canvas>
 
-  <h1>Para você, meu amor</h1>
+<canvas id="stars" class="stars"></canvas>
 
-  <p>
-    Amor, às vezes eu penso em como o tempo se curva diante de ti.  
-    Há algo no teu silêncio que preenche — uma doçura escondida entre o mistério e o riso.  
-    És feita de tudo o que é leve e, mesmo assim, carregas o peso do meu encanto.  
-    As estrelas pareceriam pálidas se pudessem te ver como eu te vejo — com o coração em febre e a mente entregue.  
-    Feliz aniversário, minha vida. Que cada batida do meu coração ecoe o que não cabe nas palavras.
-  </p>
+<div class="card" role="main">
+  <div class="header">
+    <div>
+      <div class="title">Para você — minha princesa</div>
+      <div class="subtitle">Toque no coração para ouvir meu coração</div>
+    </div>
+    <div style="margin-left:auto;text-align:right">
+      <div style="font-size:12px;color:rgba(255,230,240,0.75)">Com amor,</div>
+      <div style="font-weight:700;color:#ffdff0">Raphael</div>
+    </div>
+  </div>
 
-  <div class="heart" id="heart"></div>
+  <div id="poema" class="poema">
+    Amor, se soubesses o quanto o teu sorriso ficou preso em mim —  
+    nas minhas lembranças, no peito, e nas madrugadas em que o silêncio parece teu nome sussurrado.  
+    Tu és o motivo do meu riso calmo, da minha fé nas pequenas coisas.  
+    As curvas do teu sorriso se gravaram no meu coração e na minha mente  
+    desde o instante em que te vi sorrir pela primeira vez.  
 
-  <p class="credit">— Com amor, para sempre.</p>
+    Hoje, no teu dia, quero que sintas o quanto és amada,  
+    o quanto cada batida do meu coração pulsa na mesma cadência da tua presença.  
+    Que o tempo te envolva com ternura, minha vida,  
+    e que o mundo inteiro se curve diante da tua luz suave e misteriosa.
 
-  <audio id="music" preload="auto" loop>
-    <source src="Cigarretes.mp3" type="audio/mpeg">
-  </audio>
+    Feliz aniversário, minha paixão.  
+    Tu és e sempre serás o meu amor mais bonito.
+  </div>
 
-  <script>
-    // Fundo animado de estrelas
-    const canvas = document.getElementById("stars");
-    const ctx = canvas.getContext("2d");
-    let stars = [];
+  <div class="controls">
+    <button id="replayBtn" class="btn">Reaparecer poema</button>
+  </div>
+</div>
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      stars = Array.from({ length: 150 }).map(() => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 1.3,
-        speed: Math.random() * 0.3 + 0.1,
-        opacity: Math.random() * 0.8 + 0.2
-      }));
+<div class="heart-ui">
+  <div id="heartBtn" class="heart-btn">
+    <div class="heart-icon">❤</div>
+  </div>
+</div>
+
+<audio id="player" preload="auto" loop>
+  <source src="Cigarettes.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* Fundo estrelado */
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+let stars = [];
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  stars = Array.from({ length: 120 }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: Math.random() * 1.5,
+    opacity: Math.random(),
+    speed: 0.15 + Math.random() * 0.3
+  }));
+}
+function animate() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  stars.forEach(star => {
+    ctx.fillStyle = `rgba(255,255,255,${star.opacity})`;
+    ctx.beginPath();
+    ctx.arc(star.x, star.y, star.size, 0, Math.PI*2);
+    ctx.fill();
+    star.y += star.speed;
+    if (star.y > canvas.height) star.y = 0;
+  });
+  requestAnimationFrame(animate);
+}
+resize();
+animate();
+window.addEventListener("resize", resize);
+
+/* Controle do coração e música */
+const heart = document.getElementById("heartBtn");
+const audio = document.getElementById("player");
+heart.addEventListener("click", async () => {
+  try {
+    if (audio.paused) {
+      await audio.play();
+      heart.classList.add("heart-playing");
+    } else {
+      audio.pause();
+      heart.classList.remove("heart-playing");
     }
+  } catch (err) {
+    console.log("Erro ao tocar música:", err);
+  }
+});
 
-    function animateStars() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      stars.forEach(star => {
-        ctx.beginPath();
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fill();
-        star.y += star.speed;
-        if (star.y > canvas.height) star.y = 0;
-      });
-      requestAnimationFrame(animateStars);
-    }
-
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-    animateStars();
-
-    // Controle da música
-    const heart = document.getElementById("heart");
-    const music = document.getElementById("music");
-
-    heart.addEventListener("click", () => {
-      if (music.paused) {
-        music.play().catch(e => console.log("Autoplay bloqueado:", e));
-      } else {
-        music.pause();
-      }
-    });
-  </script>
+/* Botão de reaparecer poema */
+const replayBtn = document.getElementById("replayBtn");
+const poema = document.getElementById("poema");
+replayBtn.addEventListener("click", () => {
+  poema.scrollTo({ top: 0, behavior: "smooth" });
+});
+</script>
 </body>
 </html>
