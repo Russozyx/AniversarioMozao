@@ -5,182 +5,112 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Feliz Aniversário — Meu Amor</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; }
-body {
-  font-family: "Georgia", "Poppins", serif;
-  background: radial-gradient(ellipse at top left, rgba(12,6,20,1) 0%, rgba(6,3,12,1) 60%, rgba(4,2,8,1) 100%);
-  color: #f6eef8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 18px;
-  overflow: hidden;
+* {box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;}
+body{
+  font-family: "Georgia","Poppins",serif;
+  background: radial-gradient(ellipse at center, #0b0515 0%, #06020d 70%, #04000a 100%);
+  color:#f6eef8;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
 }
 
-/* Cartão principal */
-.card {
-  width: 100%;
-  max-width: 920px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border-radius: 18px;
-  padding: 28px 36px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.03);
-  z-index: 2;
-}
-
-.header {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.title {
-  font-size: 26px;
-  letter-spacing: 0.6px;
-  font-weight: 700;
-  color: #ffe6f2;
-}
-
-.subtitle {
-  font-size: 13px;
-  color: rgba(255,230,240,0.75);
-}
-
-.poema {
-  margin-top: 14px;
-  font-size: 18px;
-  line-height: 1.9;
-  max-height: 420px;
-  overflow: auto;
-  padding-right: 12px;
-  text-align: justify;
-  white-space: pre-wrap;
-}
-
-/* Barra de rolagem personalizada */
-.poema::-webkit-scrollbar {
-  width: 8px;
-}
-.poema::-webkit-scrollbar-track {
-  background: rgba(255,255,255,0.03);
-  border-radius: 4px;
-}
-.poema::-webkit-scrollbar-thumb {
-  background: rgba(255,200,220,0.3);
-  border-radius: 4px;
-}
-.poema::-webkit-scrollbar-thumb:hover {
-  background: rgba(255,150,200,0.5);
-}
-
-.controls {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  margin-top: 18px;
-}
-
-.btn {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.08);
-  padding: 10px 14px;
-  border-radius: 10px;
-  color: #ffdff0;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all .18s ease;
-}
-
-.btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-}
-
-footer {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 12px;
-  color: rgba(255,230,240,0.6);
-  font-size: 12px;
-}
-
-/* Coração */
-.heart-ui {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-.heart-btn {
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: radial-gradient(circle at 30% 30%, rgba(255,182,193,0.12), rgba(255,105,180,0.06));
-  backdrop-filter: blur(2px);
-  border: 1px solid rgba(255,255,255,0.04);
-  cursor: pointer;
-  pointer-events: auto;
-}
-.heart-icon {
-  font-size: 48px;
-  color: #ffb6c1;
-  transform-origin: center center;
-  display: inline-block;
-  animation: beat-slow 1s infinite ease-in-out;
-}
-.heart-playing .heart-icon {
-  animation: beat-fast 0.6s infinite ease-in-out;
-}
-@keyframes beat-slow {
-  0% { transform: scale(1); }
-  30% { transform: scale(1.07); }
-  60% { transform: scale(1); }
-  100% { transform: scale(1); }
-}
-@keyframes beat-fast {
-  0% { transform: scale(1); }
-  30% { transform: scale(1.12); }
-  60% { transform: scale(1); }
-  100% { transform: scale(1); }
-}
-
-.prompt {
-  margin-top: 12px;
-  text-align: center;
-  color: rgba(255,230,240,0.7);
-  font-size: 14px;
-}
-
-/* Fundo estrelado */
-.stars {
+/* Fundo animado */
+canvas#stars {
   position: fixed;
   inset: 0;
-  pointer-events: none;
   z-index: 0;
 }
-.star {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: rgba(255,255,255,0.9);
-  border-radius: 50%;
-  opacity: 0;
+
+/* Cartão */
+.card {
+  width:100%;
+  max-width:960px;
+  background:rgba(255,255,255,0.02);
+  border-radius:18px;
+  padding:32px 40px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.6);
+  border:1px solid rgba(255,255,255,0.06);
+  backdrop-filter:blur(3px);
+  position:relative;
+  z-index:2;
+}
+
+.header{display:flex;gap:16px;align-items:center;margin-bottom:12px}
+.title{font-size:26px;letter-spacing:0.6px;font-weight:700;color:#ffe6f2}
+.subtitle{font-size:13px;color:rgba(255,230,240,0.75)}
+.poema{
+  margin-top:14px;
+  font-size:18px;
+  line-height:1.9;
+  max-height:420px;
+  overflow:auto;
+  padding-right:12px;
+  text-align:justify;
+  white-space:pre-wrap;
+}
+.poema::-webkit-scrollbar{width:8px;}
+.poema::-webkit-scrollbar-track{background:rgba(255,255,255,0.03);border-radius:4px;}
+.poema::-webkit-scrollbar-thumb{background:rgba(255,200,220,0.3);border-radius:4px;}
+.poema::-webkit-scrollbar-thumb:hover{background:rgba(255,150,200,0.5);}
+.controls{display:flex;gap:12px;align-items:center;margin-top:18px}
+.btn{background:transparent;border:1px solid rgba(255,255,255,0.08);padding:10px 14px;border-radius:10px;color:#ffdff0;cursor:pointer;font-weight:600;transition:all .18s ease}
+.btn:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(0,0,0,0.35)}
+footer{display:flex;justify-content:flex-end;margin-top:12px;color:rgba(255,230,240,0.6);font-size:12px}
+
+/* Coração Neon */
+.heart-ui{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.heart-btn{
+  width:160px;
+  height:160px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:transparent;
+  border:2px solid rgba(255,120,180,0.5);
+  box-shadow:0 0 25px rgba(255,100,180,0.4), inset 0 0 10px rgba(255,140,200,0.3);
+  cursor:pointer;
+  pointer-events:auto;
+  position:relative;
+}
+.heart-btn::before{
+  content:'';
+  position:absolute;
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  border:2px solid rgba(255,120,180,0.6);
+  animation:glow 2s infinite ease-in-out;
+}
+@keyframes glow{
+  0%,100%{opacity:0.4;transform:scale(1);}
+  50%{opacity:1;transform:scale(1.15);}
+}
+.heart-icon{
+  font-size:60px;
+  color:#ff9edb;
+  text-shadow:0 0 20px rgba(255,130,190,0.8);
+  animation:beat-slow 1.2s infinite ease-in-out;
+}
+.heart-playing .heart-icon{animation:beat-fast 0.6s infinite ease-in-out;}
+@keyframes beat-slow{0%{transform:scale(1)}30%{transform:scale(1.08)}60%{transform:scale(1)}100%{transform:scale(1)}}
+@keyframes beat-fast{0%{transform:scale(1)}30%{transform:scale(1.15)}60%{transform:scale(1)}100%{transform:scale(1)}}
+
+.prompt{
+  margin-top:12px;
+  text-align:center;
+  color:rgba(255,230,240,0.7);
+  font-size:14px;
+  z-index:2;
 }
 </style>
 </head>
 <body>
 
-<canvas id="stars" class="stars"></canvas>
+<canvas id="stars"></canvas>
 
 <div class="card" role="main">
   <div class="header">
@@ -195,19 +125,38 @@ footer {
   </div>
 
   <div id="poema" class="poema">
-    Amor, se soubesses o quanto o teu sorriso ficou preso em mim —  
-    nas minhas lembranças, no peito, e nas madrugadas em que o silêncio parece teu nome sussurrado.  
-    Tu és o motivo do meu riso calmo, da minha fé nas pequenas coisas.  
-    As curvas do teu sorriso se gravaram no meu coração e na minha mente  
-    desde o instante em que te vi sorrir pela primeira vez.  
+    Minha princesa, minha vida,  
+    há algo em ti que o tempo não toca —  
+    um encanto sereno que me desarma  
+    e me deixa preso entre o teu sorriso e o silêncio que vem depois dele.  
 
-    Hoje, no teu dia, quero que sintas o quanto és amada,  
-    o quanto cada batida do meu coração pulsa na mesma cadência da tua presença.  
-    Que o tempo te envolva com ternura, minha vida,  
-    e que o mundo inteiro se curve diante da tua luz suave e misteriosa.
+    Desde o instante em que te vi sorrindo,  
+    o mundo pareceu se curvar em volta do teu olhar.  
+    As curvas do teu sorriso ficaram presas em mim,  
+    gravadas como uma cicatriz doce que não desejo curar.  
 
-    Feliz aniversário, minha paixão.  
-    Tu és e sempre serás o meu amor mais bonito.
+    Amo o modo como tua presença silencia o caos,  
+    como tua voz acende algo em mim  
+    que nem o escuro consegue apagar.  
+    Teu toque é oração,  
+    e teu nome, um refúgio.  
+
+    Hoje é o teu dia, amor,  
+    e o universo inteiro deveria se inclinar pra te ver passar.  
+    Se eu pudesse, te cobriria de céu,  
+    te cercaria de auroras e sons brandos,  
+    e deixaria o tempo parar só pra te ver sorrir de novo.  
+
+    Tu és o que há de mais lindo no acaso,  
+    o motivo por trás da calma que eu finjo entender.  
+    E se um dia eu me perder de mim,  
+    quero que saibas — foi tentando te encontrar outra vez.
+
+    Feliz aniversário, meu amor,  
+    minha luz, minha paixão.  
+    Que cada batida do meu coração  
+    continue soando o teu nome em segredo,  
+    como uma promessa que o tempo jamais quebrará.
   </div>
 
   <div class="controls">
@@ -222,64 +171,61 @@ footer {
 </div>
 
 <audio id="player" preload="auto" loop>
-  <source src="Cigarettes.mp3" type="audio/mpeg">
+  <source src="https://raw.githubusercontent.com/Russozyx/AniversarioMozao/main/Cigarettes.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 /* Fundo estrelado */
-const canvas = document.getElementById("stars");
-const ctx = canvas.getContext("2d");
-let stars = [];
-function resize() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  stars = Array.from({ length: 120 }, () => ({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    size: Math.random() * 1.5,
-    opacity: Math.random(),
-    speed: 0.15 + Math.random() * 0.3
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
+let stars=[];
+function resize(){
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+  stars=Array.from({length:180}).map(()=>({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    size:Math.random()*1.3+0.3,
+    opacity:Math.random()*0.8+0.2,
+    speed:Math.random()*0.3+0.1
   }));
 }
-function animate() {
+function animate(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  stars.forEach(star => {
-    ctx.fillStyle = `rgba(255,255,255,${star.opacity})`;
+  stars.forEach(s=>{
     ctx.beginPath();
-    ctx.arc(star.x, star.y, star.size, 0, Math.PI*2);
+    ctx.fillStyle=`rgba(255,255,255,${s.opacity})`;
+    ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
     ctx.fill();
-    star.y += star.speed;
-    if (star.y > canvas.height) star.y = 0;
+    s.y+=s.speed;
+    if(s.y>canvas.height)s.y=0;
   });
   requestAnimationFrame(animate);
 }
-resize();
-animate();
-window.addEventListener("resize", resize);
+resize();animate();
+window.addEventListener("resize",resize);
 
-/* Controle do coração e música */
-const heart = document.getElementById("heartBtn");
-const audio = document.getElementById("player");
-heart.addEventListener("click", async () => {
-  try {
-    if (audio.paused) {
+/* Música */
+const heart=document.getElementById("heartBtn");
+const audio=document.getElementById("player");
+heart.addEventListener("click",async()=>{
+  try{
+    if(audio.paused){
       await audio.play();
       heart.classList.add("heart-playing");
-    } else {
+    }else{
       audio.pause();
       heart.classList.remove("heart-playing");
     }
-  } catch (err) {
-    console.log("Erro ao tocar música:", err);
+  }catch(err){
+    console.log("Erro ao tocar:",err);
   }
 });
 
-/* Botão de reaparecer poema */
-const replayBtn = document.getElementById("replayBtn");
-const poema = document.getElementById("poema");
-replayBtn.addEventListener("click", () => {
-  poema.scrollTo({ top: 0, behavior: "smooth" });
-});
+/* Botão */
+const replayBtn=document.getElementById("replayBtn");
+const poema=document.getElementById("poema");
+replayBtn.addEventListener("click",()=>poema.scrollTo({top:0,behavior:"smooth"}));
 </script>
 </body>
 </html>
