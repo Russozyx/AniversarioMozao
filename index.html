@@ -1,43 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Feliz Aniversário — Meu Amor</title>
+  <meta charset="UTF-8">
+  <title>Feliz Aniversário, meu amor</title>
   <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- áudio (usando jsDelivr para servir corretamente o MP3 do GitHub) -->
-  <audio id="bg-audio" preload="auto" loop playsinline>
-    <source src="https://cdn.jsdelivr.net/gh/Russozyx/AniversarioMozao/Cigarretes.mp3" type="audio/mpeg">
-  </audio>
+  <div id="background"></div>
 
-  <div class="stage">
-    <!-- fundo bordô / dourado com partículas -->
-    <div class="bg-gradient"></div>
-    <canvas id="floaters" aria-hidden="true"></canvas>
-
-    <!-- envelope -->
-    <div class="envelope-wrap" id="envelopeWrap" aria-hidden="false">
-      <div class="envelope" id="envelope">
-        <div class="envelope-flap"></div>
-        <div class="envelope-body"></div>
-        <!-- carta dentro do envelope -->
-        <div class="letter" id="letter">
-          <div class="paper">
-            <div class="paper-content">
-              <h1>Feliz Aniversário, meu amor</h1>
-              <div id="typed" class="typed"></div>
-              <div class="signature">Para sempre teu,<br><strong>Raphael Silva Mendonça</strong></div>
-            </div>
-          </div>
-        </div>
-        <!-- selo sobre o flap -->
-        <img src="selo.png" alt="Selo DR" id="seal" class="seal" />
-      </div>
-    </div>
+  <div class="envelope">
+    <div class="seal"></div>
   </div>
 
-  <script src="script.js"></script>
+  <div class="letter" id="letter">
+    <div class="poem" id="poem"></div>
+  </div>
+
+  <audio id="music" src="https://raw.githubusercontent.com/Russozyx/AniversarioMozao/main/Cigarettes.mp3" preload="auto"></audio>
 </body>
 </html>
