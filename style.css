@@ -1,0 +1,146 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  background: radial-gradient(circle at top left, #2a0101 0%, #170000 70%);
+  font-family: 'Georgia', serif;
+  color: #f8e7e7;
+  overflow: hidden;
+}
+
+/* Fundo animado com partículas douradas */
+body::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,223,150,0.06) 1%, transparent 60%);
+  animation: glow 12s infinite alternate;
+  z-index: 0;
+}
+@keyframes glow {
+  0% { transform: translate(-20%, -10%) scale(1); }
+  100% { transform: translate(10%, 20%) scale(1.2); }
+}
+
+/* Animação das partículas */
+@keyframes particles {
+  from { transform: translateY(0) }
+  to { transform: translateY(-1000px) }
+}
+
+/* Cena */
+.scene {
+  position: relative;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1200px;
+  z-index: 2;
+}
+
+/* Envelope */
+.envelope {
+  width: 420px;
+  height: 280px;
+  background: linear-gradient(160deg, #5c0000, #2a0101);
+  border-radius: 8px;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  transform-style: preserve-3d;
+  transform: rotateX(0);
+  transition: transform 2.2s ease-in-out;
+  cursor: pointer;
+}
+
+.envelope.open {
+  transform: rotateX(180deg);
+}
+
+/* Tampa da carta */
+.envelope-cover {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(160deg, #7a0303, #3b0101);
+  border-radius: 8px;
+  backface-visibility: hidden;
+  transform-origin: top;
+  transform: rotateX(0deg);
+  transition: transform 2s ease;
+}
+
+.envelope.open .envelope-cover {
+  transform: rotateX(-180deg);
+}
+
+/* Conteúdo da carta */
+.envelope-letter {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #fff8f2, #f9e9df);
+  border-radius: 8px;
+  transform: rotateX(180deg);
+  backface-visibility: hidden;
+  padding: 28px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Selo */
+.selo {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 60px;
+  height: 60px;
+  filter: drop-shadow(0 0 6px rgba(150,0,0,0.7));
+  animation: pulse 3s infinite ease-in-out;
+}
+@keyframes pulse {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.08); opacity: 0.9; }
+}
+
+/* Mensagem */
+.message {
+  text-align: center;
+  color: #2b0000;
+  max-width: 340px;
+}
+
+.message h1 {
+  font-size: 22px;
+  margin-bottom: 18px;
+  color: #520000;
+}
+
+.message p {
+  font-size: 16px;
+  line-height: 1.8;
+  text-align: justify;
+  color: #300000;
+  white-space: pre-wrap;
+  min-height: 220px;
+}
+
+/* Assinatura */
+.assinatura {
+  margin-top: 24px;
+  font-style: italic;
+  color: #5a0000;
+  font-size: 15px;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+.show-assinatura {
+  opacity: 1;
+}
