@@ -1,9 +1,9 @@
-const envelope = document.getElementById('envelope');
-const typedText = document.getElementById('typedText');
-const music = document.getElementById('music');
-const assinatura = document.querySelector('.assinatura');
+const envelope = document.getElementById("envelope");
+const seal = document.getElementById("seal");
+const poemElement = document.getElementById("poem");
+const audio = document.getElementById("bg-music");
 
-const poema = `Hoje o mundo celebra teu existir, e eu celebro o privilégio de poder te amar.
+const poemText = `Hoje o mundo celebra teu existir, e eu celebro o privilégio de poder te amar.
 Não há presente que se compare à tua presença, nem data que mereça mais ser lembrada do que o instante em que vieste ao mundo.
 Cada aniversário teu é um lembrete silencioso de que o universo, por alguma razão que não sei explicar, me concedeu a sorte de cruzar teu caminho.
 
@@ -31,23 +31,15 @@ E quando o tempo passar — e tudo mudar —, lembra-te de que há alguém que a
 Alguém que te admira, te deseja e te ama com uma devoção que não se apaga,
 porque amar-te é mais do que um sentimento: é o próprio destino que escolhi seguir.`;
 
-/* Abrir carta automaticamente */
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    envelope.classList.add('open');
-    setTimeout(() => typePoem(), 2500);
-  }, 2200);
+seal.addEventListener("click", () => {
+    envelope.classList.add("open");
+    typeWriter(poemText, poemElement, 0, 40);
+    setTimeout(() => audio.play(), 2000);
 });
 
-/* Efeito de digitação */
-let index = 0;
-function typePoem() {
-  if (index < poema.length) {
-    typedText.innerHTML += poema.charAt(index);
-    index++;
-    setTimeout(typePoem, 35);
-  } else {
-    assinatura.classList.add('show-assinatura');
-    music.play().catch(() => {});
-  }
+function typeWriter(text, element, index, speed) {
+    if (index < text.length) {
+        element.innerHTML += text.charAt(index);
+        setTimeout(() => typeWriter(text, element, index + 1, speed), speed);
+    }
 }
