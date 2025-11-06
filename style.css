@@ -1,146 +1,88 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+body {
+    margin: 0;
+    overflow: hidden;
+    height: 100vh;
+    background: radial-gradient(circle at center, #3c0000 0%, #1a0000 100%);
+    font-family: "Cormorant Garamond", serif;
+    color: #f9e6d1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-html, body {
-  height: 100%;
-  background: radial-gradient(circle at top left, #2a0101 0%, #170000 70%);
-  font-family: 'Georgia', serif;
-  color: #f8e7e7;
-  overflow: hidden;
+.background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #5b1a1a 0%, #2b0000 100%);
+    animation: pulse 6s infinite alternate;
+    z-index: -1;
 }
 
-/* Fundo animado com partículas douradas */
-body::before {
-  content: "";
-  position: absolute;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255,223,150,0.06) 1%, transparent 60%);
-  animation: glow 12s infinite alternate;
-  z-index: 0;
-}
-@keyframes glow {
-  0% { transform: translate(-20%, -10%) scale(1); }
-  100% { transform: translate(10%, 20%) scale(1.2); }
-}
-
-/* Animação das partículas */
-@keyframes particles {
-  from { transform: translateY(0) }
-  to { transform: translateY(-1000px) }
-}
-
-/* Cena */
-.scene {
-  position: relative;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  perspective: 1200px;
-  z-index: 2;
-}
-
-/* Envelope */
-.envelope {
-  width: 420px;
-  height: 280px;
-  background: linear-gradient(160deg, #5c0000, #2a0101);
-  border-radius: 8px;
-  position: relative;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-  transform-style: preserve-3d;
-  transform: rotateX(0);
-  transition: transform 2.2s ease-in-out;
-  cursor: pointer;
-}
-
-.envelope.open {
-  transform: rotateX(180deg);
-}
-
-/* Tampa da carta */
-.envelope-cover {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(160deg, #7a0303, #3b0101);
-  border-radius: 8px;
-  backface-visibility: hidden;
-  transform-origin: top;
-  transform: rotateX(0deg);
-  transition: transform 2s ease;
-}
-
-.envelope.open .envelope-cover {
-  transform: rotateX(-180deg);
-}
-
-/* Conteúdo da carta */
-.envelope-letter {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, #fff8f2, #f9e9df);
-  border-radius: 8px;
-  transform: rotateX(180deg);
-  backface-visibility: hidden;
-  padding: 28px 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Selo */
-.selo {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 60px;
-  height: 60px;
-  filter: drop-shadow(0 0 6px rgba(150,0,0,0.7));
-  animation: pulse 3s infinite ease-in-out;
-}
 @keyframes pulse {
-  0%,100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.08); opacity: 0.9; }
+    0% { filter: brightness(1); }
+    100% { filter: brightness(1.2); }
 }
 
-/* Mensagem */
-.message {
-  text-align: center;
-  color: #2b0000;
-  max-width: 340px;
+.envelope {
+    position: relative;
+    width: 380px;
+    height: 260px;
+    background: linear-gradient(135deg, #8b0000, #5b1a1a);
+    border: 2px solid #d4af37;
+    border-radius: 6px;
+    perspective: 1200px;
+    cursor: pointer;
+    box-shadow: 0 0 30px rgba(0,0,0,0.6);
+    transition: transform 2s ease;
 }
 
-.message h1 {
-  font-size: 22px;
-  margin-bottom: 18px;
-  color: #520000;
+.letter {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #f9e6d1;
+    border-radius: 4px;
+    transform-origin: top;
+    transform: rotateX(90deg);
+    backface-visibility: hidden;
+    transition: transform 1.5s ease;
+    padding: 25px;
+    box-sizing: border-box;
+    color: #3b0d0d;
+}
+
+.seal {
+    position: absolute;
+    width: 100px;
+    left: calc(50% - 50px);
+    top: calc(50% - 50px);
+    transition: opacity 1s ease;
+}
+
+.message h2 {
+    color: #5b1a1a;
+    text-align: center;
 }
 
 .message p {
-  font-size: 16px;
-  line-height: 1.8;
-  text-align: justify;
-  color: #300000;
-  white-space: pre-wrap;
-  min-height: 220px;
+    text-align: justify;
+    font-size: 16px;
+    line-height: 1.6;
 }
 
-/* Assinatura */
-.assinatura {
-  margin-top: 24px;
-  font-style: italic;
-  color: #5a0000;
-  font-size: 15px;
-  opacity: 0;
-  transition: opacity 1.5s ease;
+.signature {
+    text-align: right;
+    font-style: italic;
+    margin-top: 20px;
 }
 
-.show-assinatura {
-  opacity: 1;
+.open .letter {
+    transform: rotateX(0deg);
+}
+
+.open .seal {
+    opacity: 0;
 }
