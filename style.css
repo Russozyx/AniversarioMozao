@@ -28,6 +28,7 @@ body {
   animation: float 6s ease-in-out infinite;
   z-index: 5;
   cursor: pointer;
+  transition: transform 1s ease-in-out, opacity 1s ease-in-out;
 }
 
 @keyframes float {
@@ -70,9 +71,10 @@ body {
   pointer-events: none; /* previne interação enquanto escondida */
 }
 
+/* Quando a carta abre */
 .letter.open {
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1.0);
+  transform: translate(-50%, -50%) scale(1.05); /* leve zoom para dar impacto */
   overflow-y: auto;
   scrollbar-width: thin;
   pointer-events: auto;
@@ -87,10 +89,10 @@ body {
   line-height: 1.8;
   white-space: pre-wrap;
   opacity: 0;
-  transition: opacity 1s ease-in-out;
+  transition: opacity 1.5s ease-in-out;
 }
 
-/* aparecer do poema após a carta abrir */
+/* Aparece suavemente quando a carta abre */
 .letter.open .poem {
   opacity: 1;
 }
