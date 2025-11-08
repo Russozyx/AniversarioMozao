@@ -26,6 +26,8 @@ body {
   border-radius: 5px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
   animation: float 6s ease-in-out infinite;
+  z-index: 5;
+  cursor: pointer;
 }
 
 @keyframes float {
@@ -64,13 +66,17 @@ body {
   justify-content: start;
   padding: 50px 70px;
   transition: all 1s ease-in-out;
+  z-index: 1;
+  pointer-events: none; /* previne interação enquanto escondida */
 }
 
 .letter.open {
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1.3);
+  transform: translate(-50%, -50%) scale(1.0);
   overflow-y: auto;
   scrollbar-width: thin;
+  pointer-events: auto;
+  z-index: 4;
 }
 
 /* Texto do poema */
@@ -81,12 +87,12 @@ body {
   line-height: 1.8;
   white-space: pre-wrap;
   opacity: 0;
-  animation: typing 8s steps(80) forwards;
+  transition: opacity 1s ease-in-out;
 }
 
-@keyframes typing {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+/* aparecer do poema após a carta abrir */
+.letter.open .poem {
+  opacity: 1;
 }
 
 /* Rolagem elegante */
