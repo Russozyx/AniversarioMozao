@@ -35,7 +35,7 @@ porque amar-te é mais do que um sentimento: é o próprio destino que escolhi s
 Para sempre teu,
 Raphael Silva Mendonça`;
 
-  // Desbloqueia o áudio no primeiro toque (iOS friendly)
+  // Desbloqueia o áudio no primeiro toque (necessário para iOS)
   const unlockAudio = () => {
     music.play().then(() => {
       music.pause();
@@ -47,23 +47,20 @@ Raphael Silva Mendonça`;
   document.addEventListener('touchstart', unlockAudio, { once: true });
   document.addEventListener('click', unlockAudio, { once: true });
 
-  // Ao clicar no envelope
+  // Abertura do envelope ao clicar
   envelope.addEventListener('click', () => {
-    // Desativa cliques repetidos imediatamente
     envelope.style.pointerEvents = 'none';
-
-    // Anima envelope
     envelope.style.transition = 'transform 1s ease-in-out, opacity 1s ease-in-out';
-    envelope.style.transform = 'translate(-50%, -100%) rotateX(90deg)';
+    envelope.style.transform = 'translate(-50%, -150%) rotateX(90deg)';
     envelope.style.opacity = '0';
 
-    // Após 1s, remove da tela
     setTimeout(() => {
-      envelope.style.display = 'none'; // desaparece de vez
+      envelope.style.display = 'none'; // remove da tela
       letter.classList.add('open');
-      letter.style.opacity = '1'; // fade-in
+      letter.style.opacity = '1';
       poem.textContent = poemText;
       music.play().catch(() => {});
+      document.body.classList.add('glow-active'); // ativa brilho dourado ✨
     }, 1000);
   });
 };
