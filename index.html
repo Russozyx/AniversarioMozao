@@ -4,13 +4,12 @@
   <meta charset="UTF-8">
   <title>Feliz Aniversário, meu amor</title>
   <link rel="stylesheet" href="style.css">
-  <script defer src="script.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
   <div id="background"></div>
 
-  <div class="envelope">
+  <div class="envelope" id="envelope">
     <div class="seal"></div>
   </div>
 
@@ -18,6 +17,10 @@
     <div class="poem" id="poem"></div>
   </div>
 
+  <!-- áudio (mantive sua URL) -->
   <audio id="music" src="https://raw.githubusercontent.com/Russozyx/AniversarioMozao/main/Cigarettes.mp3" preload="auto"></audio>
+
+  <!-- script no final do body para garantir DOM pronto -->
+  <script src="script.js"></script>
 </body>
 </html>
