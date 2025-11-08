@@ -1,8 +1,8 @@
-window.onload = () => {
-  const envelope = document.querySelector('.envelope');
-  const letter = document.querySelector('.letter');
-  const poem = document.getElementById('poem');
-  const music = document.getElementById('music');
+document.addEventListener("DOMContentLoaded", () => {
+  const envelope = document.querySelector(".envelope");
+  const letter = document.querySelector(".letter");
+  const poem = document.getElementById("poem");
+  const music = document.getElementById("music");
 
   const poemText = `Hoje o mundo celebra teu existir, e eu celebro o privilégio de poder te amar.
 Não há presente que se compare à tua presença, nem data que mereça mais ser lembrada do que o instante em que vieste ao mundo.
@@ -35,10 +35,10 @@ porque amar-te é mais do que um sentimento: é o próprio destino que escolhi s
 Para sempre teu,
 Raphael Silva Mendonça`;
 
-  let unlocked = false; // controla se o áudio foi liberado
+  let unlocked = false;
 
-  envelope.addEventListener('click', async () => {
-    // 🔊 Desbloqueia o áudio no iOS
+  envelope.addEventListener("click", async () => {
+    // 🔊 Desbloqueia o som no iOS
     if (!unlocked) {
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -46,25 +46,24 @@ Raphael Silva Mendonça`;
         source.connect(audioCtx.destination);
         await audioCtx.resume();
         unlocked = true;
-        console.log("Áudio desbloqueado no iOS");
-      } catch (e) {
-        console.log("Falha ao desbloquear áudio:", e);
+      } catch (err) {
+        console.warn("Falha ao desbloquear áudio:", err);
       }
     }
 
-    // ✉️ Move o envelope (animação de abertura)
-    envelope.style.transition = 'transform 1s ease-in-out, opacity 1s ease-in-out';
-    envelope.style.transform = 'translate(-50%, -120%) rotateX(90deg)';
-    envelope.style.opacity = '0'; // desaparece depois de abrir
+    // ✉️ Anima a abertura
+    envelope.style.transition = "transform 1s ease-in-out, opacity 1s ease-in-out";
+    envelope.style.transform = "translate(-50%, -120%) rotateX(90deg)";
+    envelope.style.opacity = "0";
 
-    // ⏱️ Aguarda a animação e então mostra a carta
+    // 💌 Mostra a carta após 1s
     setTimeout(() => {
-      envelope.style.display = 'none'; // remove o envelope da frente
-      letter.classList.add('open');
+      envelope.style.display = "none";
+      letter.classList.add("open");
       poem.textContent = poemText;
 
-      // 🔈 Agora toca o som sincronizado
-      music.play().catch(err => console.log("Erro ao reproduzir som:", err));
+      // 🔈 Toca a música
+      music.play().catch(err => console.warn("Erro ao tocar:", err));
     }, 1000);
   });
-};
+});
