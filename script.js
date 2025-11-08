@@ -35,33 +35,36 @@ porque amar-te é mais do que um sentimento: é o próprio destino que escolhi s
 Para sempre teu,
 Raphael Silva Mendonça`;
 
-  let unlocked = false; // controla se o contexto foi liberado
+  let unlocked = false; // controla se o áudio foi liberado
 
   envelope.addEventListener('click', async () => {
-    // 🔊 Passo 1 — desbloqueia o áudio no iOS
+    // 🔊 Desbloqueia o áudio no iOS
     if (!unlocked) {
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const source = audioCtx.createMediaElementSource(music);
         source.connect(audioCtx.destination);
-        await audioCtx.resume(); // libera o contexto de áudio
+        await audioCtx.resume();
         unlocked = true;
-        console.log("Áudio desbloqueado com sucesso no iOS.");
+        console.log("Áudio desbloqueado no iOS");
       } catch (e) {
-        console.log("Falha ao desbloquear o áudio:", e);
+        console.log("Falha ao desbloquear áudio:", e);
       }
     }
 
-    // ✉️ Passo 2 — inicia a animação do envelope
-    envelope.style.transform = 'translate(-50%, -100%) rotateX(90deg)';
+    // ✉️ Move o envelope (animação de abertura)
+    envelope.style.transition = 'transform 1s ease-in-out, opacity 1s ease-in-out';
+    envelope.style.transform = 'translate(-50%, -120%) rotateX(90deg)';
+    envelope.style.opacity = '0'; // desaparece depois de abrir
 
-    // 🕐 Passo 3 — espera a animação e toca o som sincronizado
+    // ⏱️ Aguarda a animação e então mostra a carta
     setTimeout(() => {
+      envelope.style.display = 'none'; // remove o envelope da frente
       letter.classList.add('open');
       poem.textContent = poemText;
 
-      // agora podemos tocar o som, pois o contexto foi liberado antes
-      music.play().catch(err => console.log("Erro ao reproduzir:", err));
+      // 🔈 Agora toca o som sincronizado
+      music.play().catch(err => console.log("Erro ao reproduzir som:", err));
     }, 1000);
   });
 };
