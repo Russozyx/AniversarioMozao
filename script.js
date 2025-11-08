@@ -1,9 +1,11 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const envelope = document.querySelector(".envelope");
-  const letter = document.querySelector(".letter");
-  const poem = document.getElementById("poem");
-  const music = document.getElementById("music");
+// script.js
+(() => {
+  const envelope = document.getElementById('envelope');
+  const letter = document.getElementById('letter');
+  const poem = document.getElementById('poem');
+  const music = document.getElementById('music');
 
+  // texto do poema
   const poemText = `Hoje o mundo celebra teu existir, e eu celebro o privilégio de poder te amar.
 Não há presente que se compare à tua presença, nem data que mereça mais ser lembrada do que o instante em que vieste ao mundo.
 Cada aniversário teu é um lembrete silencioso de que o universo, por alguma razão que não sei explicar, me concedeu a sorte de cruzar teu caminho.
@@ -35,35 +37,80 @@ porque amar-te é mais do que um sentimento: é o próprio destino que escolhi s
 Para sempre teu,
 Raphael Silva Mendonça`;
 
-  let unlocked = false;
+  let interacted = false;
+  const ANIMATION_MS = 1000; // tempo da animação (sincronizar com CSS)
 
-  envelope.addEventListener("click", async () => {
-    // 🔊 Desbloqueia o som no iOS
-    if (!unlocked) {
-      try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const source = audioCtx.createMediaElementSource(music);
-        source.connect(audioCtx.destination);
-        await audioCtx.resume();
-        unlocked = true;
-      } catch (err) {
-        console.warn("Falha ao desbloquear áudio:", err);
+  function fadeInAudio(duration = 3000) {
+    try {
+      music.volume = 0;
+      const start = performance.now();
+      music.play().catch(err => {
+        console.warn('Erro ao iniciar áudio (play):', err);
+      });
+
+      function step(now) {
+        const elapsed = now - start;
+        const t = Math.min(1, elapsed / duration);
+        music.volume = t * 1.0; // fade até volume 1.0
+        if (t < 1) requestAnimationFrame(step);
       }
+      requestAnimationFrame(step);
+    } catch (e) {
+      console.warn('Falha no fade-in do áudio:', e);
+    }
+  }
+
+  function openEnvelopeSequence() {
+    // se já abriu, ignora
+    if (interacted) return;
+    interacted = true;
+
+    // chama play imediatamente em volume 0 para garantir desbloqueio no iOS
+    // e depois faremos fade-in quando a carta aparecer
+    try {
+      music.volume = 0;
+      // play() dentro do gesto do usuário tem alta chance de ser aceito no iOS
+      music.play().then(() => {
+        // pausamos rapidamente para garantir que o som não seja ouvido antes da carta abrir
+        music.pause();
+        music.currentTime = 0;
+      }).catch(() => {
+        // pode falhar em alguns casos; não crítico
+      });
+    } catch (e) {
+      console.warn('Erro tentando pré-play do áudio:', e);
     }
 
-    // ✉️ Anima a abertura
-    envelope.style.transition = "transform 1s ease-in-out, opacity 1s ease-in-out";
-    envelope.style.transform = "translate(-50%, -120%) rotateX(90deg)";
-    envelope.style.opacity = "0";
+    // anima o envelope (sobe e some)
+    envelope.style.transition = 'transform 1s ease-in-out, opacity 1s ease-in-out';
+    envelope.style.transform = 'translate(-50%, -120%) rotateX(90deg)';
+    envelope.style.opacity = '0';
 
-    // 💌 Mostra a carta após 1s
+    // depois do tempo de animação, remove envelope e mostra carta
     setTimeout(() => {
-      envelope.style.display = "none";
-      letter.classList.add("open");
+      envelope.style.display = 'none';
+      letter.classList.add('open');
       poem.textContent = poemText;
 
-      // 🔈 Toca a música
-      music.play().catch(err => console.warn("Erro ao tocar:", err));
-    }, 1000);
-  });
-});
+      // agora toca com fade-in suave
+      fadeInAudio(3000);
+    }, ANIMATION_MS);
+  }
+
+  // Usa pointerdown para cobrir mouse/touch; listener com {once: true} para disparar só uma vez
+  envelope.addEventListener('pointerdown', (e) => {
+    // previne gestos de scroll rápidos em alguns dispositivos
+    if (e.cancelable) e.preventDefault();
+    openEnvelopeSequence();
+  }, { passive: false, once: true });
+
+  // fallback: também aceita clique por segurança (alguns browsers tratam de forma diferente)
+  envelope.addEventListener('click', (e) => {
+    openEnvelopeSequence();
+  }, { once: true });
+
+  // protege contra execução precoce do script - se elemento não existir, loga
+  if (!envelope || !letter || !poem || !music) {
+    console.error('Elementos não encontrados: certifique-se de que IDs existem no HTML.');
+  }
+})();
