@@ -4,7 +4,6 @@ window.onload = () => {
   const poem = document.getElementById('poem');
   const music = document.getElementById('music');
 
-  // Texto do poema
   const poemText = `Hoje o mundo celebra teu existir, e eu celebro o privilégio de poder te amar.
 Não há presente que se compare à tua presença, nem data que mereça mais ser lembrada do que o instante em que vieste ao mundo.
 Cada aniversário teu é um lembrete silencioso de que o universo, por alguma razão que não sei explicar, me concedeu a sorte de cruzar teu caminho.
@@ -36,13 +35,33 @@ porque amar-te é mais do que um sentimento: é o próprio destino que escolhi s
 Para sempre teu,
 Raphael Silva Mendonça`;
 
-  // Abertura do envelope
-  setTimeout(() => {
+  let unlocked = false; // controla se o contexto foi liberado
+
+  envelope.addEventListener('click', async () => {
+    // 🔊 Passo 1 — desbloqueia o áudio no iOS
+    if (!unlocked) {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const source = audioCtx.createMediaElementSource(music);
+        source.connect(audioCtx.destination);
+        await audioCtx.resume(); // libera o contexto de áudio
+        unlocked = true;
+        console.log("Áudio desbloqueado com sucesso no iOS.");
+      } catch (e) {
+        console.log("Falha ao desbloquear o áudio:", e);
+      }
+    }
+
+    // ✉️ Passo 2 — inicia a animação do envelope
     envelope.style.transform = 'translate(-50%, -100%) rotateX(90deg)';
+
+    // 🕐 Passo 3 — espera a animação e toca o som sincronizado
     setTimeout(() => {
       letter.classList.add('open');
       poem.textContent = poemText;
-      music.play().catch(() => console.log('Autoplay bloqueado'));
+
+      // agora podemos tocar o som, pois o contexto foi liberado antes
+      music.play().catch(err => console.log("Erro ao reproduzir:", err));
     }, 1000);
-  }, 2000);
+  });
 };
